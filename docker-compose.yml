@@ -1,0 +1,21 @@
+services:
+  fastapi:
+    build:
+      context: ./fastapi
+    networks:
+      - rede_fastapi
+  proxy:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - app_network
+      - rede_fastapi
+
+networks:
+  app_network:
+  rede_fastapi:
+    internal: true
+
